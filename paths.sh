@@ -1,12 +1,14 @@
 # The path where you have installed LLVM/CLANG.
 # This is where make install put the executables.
 
-export LLVM_BUILD_DIR=/usr/local/
+export LLVM_BUILD_DIR=/import/home/ludwig/SCAM/llvm/build/
 
 # The path where you are building systemc-clang
-export SYSTEMC_CLANG_BUILD_DIR=/home/anirudh/Programs/systemc-clang-dev/build
+export SYSTEMC_CLANG_BUILD_DIR=/import/home/ludwig/SCAM/systemc-clang-build/
+
+
 LLVMCOMPONENT=cppbackend
-RTTIFLAG=-fno-rtti 
+RTTIFLAG=-fno-rtti
 LLVMCONFIG=$LLVM_BUILD_DIR/bin/llvm-config
 
 export LLVM_CXX_FLAGS=`$LLVMCONFIG --cxxflags`

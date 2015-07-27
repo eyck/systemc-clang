@@ -16,7 +16,12 @@ cmake_minimum_required(VERSION 2.6)
 #  set (LLVM_SRC_DIR
 #      $ENV{LLVM_SRC_DIR}
 #      )
- 
+  add_compile_options(-Wno-sign-compare)
+  add_compile_options(-Wno-unused-var)
+  add_compile_options(-fno-rtti)
+  add_compile_options(-Wno-non-virtual-dtor)
+
+
   set (LLVM_BUILD_DIR
       $ENV{LLVM_BUILD_DIR}
       )
