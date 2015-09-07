@@ -197,3 +197,11 @@ void Model::dump(raw_ostream & os)
   llvm::errs() << "\n ------------------------------------------------------\n";
 	}
 }
+
+FindNetlist::instancePortSignalMapType Model::getInstancePortSignalMapType() {
+    return this->_instancePortSignalMap;
+}
+
+FindNetlist::instanceListModuleMapType Model::getInstanceListModuleMap() {
+    return this->_instanceListModuleMap;
+}

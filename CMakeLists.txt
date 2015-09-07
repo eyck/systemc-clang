@@ -19,6 +19,7 @@ cmake_minimum_required(VERSION 2.6)
 
 
   add_compile_options(-fno-rtti)
+  add_compile_options(-w)
 
 
 
