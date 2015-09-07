@@ -29,6 +29,7 @@ public:
 	GlobalSuspensionAutomata *_gsauto;
 
 	bool postFire () {
+
 		Model *model = getSystemCModel ();
   
 		// Just dump the model traits.
@@ -40,7 +41,6 @@ public:
   	_gsauto->genGSauto();
   	_gsauto->initializeGpuMap();
   	_gsauto->dump();
-
 		return true;
 	}
 

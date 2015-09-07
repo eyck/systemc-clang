@@ -28,30 +28,29 @@ SC_MODULE(top) {
     while(true) {
       x = x*2;
       if (x>5) {
-	if(x > 2) {
-	  wait(1, SC_NS);
-	}
-	y++;
-      }	
-			
+        if(x > 2) {
+          wait(1, SC_NS);
+        }
+        y++;
+      }
       var++;
       if ( x < 3) {
-	var ++;
-	x = 2;	
+        var ++;
+        x = 2;
       }
       else {
-	var--;
-	y = 8;
+        var--;
+        y = 8;
       }
       wait(1, SC_NS);
       --var;
       g(var);
       y = y + 1;
       for (int i = 0; i<10; i++) {
-	i ++;	
-	wait(1, SC_NS);
+        i ++;
+        wait(1, SC_NS);
       }
-      var = var *2;			
+      var = var *2;
       wait(1, SC_NS);
       f(var, y);
     }
@@ -66,6 +65,7 @@ SC_MODULE(top) {
 int sc_main(int argc, char *argv[]){
 	
   sc_clock CLOCK("clock", 5);
+
   sc_signal<int> input;
   sc_signal<int> output;
   top t1 ("t1");

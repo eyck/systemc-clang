@@ -26,6 +26,7 @@ SC_MODULE(top) {
       wait();
       var = var *2;
       f(var, y);
+      wait(1, SC_NS);
     }	
   }
  public:

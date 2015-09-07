@@ -21,10 +21,8 @@ using namespace scpar;
 template < typename A > class PluginAction
 {
 public:
-	PluginAction (int argc, const char **argv
-	) {
-		CommonOptionsParser OptionsParser (argc, argv
-		);
+	PluginAction (int argc, const char **argv) {
+		CommonOptionsParser OptionsParser (argc, argv);
 		ClangTool Tool (OptionsParser.getCompilations (),
 										OptionsParser.getSourcePathList ()
 		);
@@ -33,6 +31,8 @@ public:
 		Tool.run (fe);
 
 	};
+
+
 
 
 private:

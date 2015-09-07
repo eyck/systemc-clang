@@ -422,7 +422,7 @@ vector <
       _outgoingTransitionsMap.find(state);
     return stateFound->second;
   } else {
-    llvm::errs() << "\n ERROR : Could not find state in map";
+    llvm::errs() << "\n ERROR : Could not find state in map \n";
     exit(0);
   }
 }
