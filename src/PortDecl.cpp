@@ -6,10 +6,11 @@ using namespace std;
 
 PortDecl::~PortDecl()
 {
-
+  /*
   if (_templateType != NULL) {
     delete _templateType;
   }
+   */
 }
 
 PortDecl::PortDecl():

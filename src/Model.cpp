@@ -13,18 +13,38 @@ Model::~Model()
 {
   llvm::errs() << "\n[[ Destructor Model ]]\n";
   // Delete all ModuleDecl pointers.
+  /*
   for (Model::moduleMapType::iterator mit = _modules.begin();
        mit != _modules.end(); mit++) {
     // Second is the ModuleDecl type.
     delete mit->second;
   }
-  _modules.clear(); 
+  _modules.clear();
+   */
 }
 
 Model::Model(const Model & from)
 {  
   _modules = from._modules;
 }
+
+std::map<ModuleDecl*,vector<PortDecl*> > Model::getModulePortMap(){
+    std::map<ModuleDecl*,vector<PortDecl*> > modulePortMap;
+
+    for(map < string, ModuleDecl * >::iterator module = this->_modules.begin();module!=this->_modules.end();module++){
+        std::vector<PortDecl*> ports;
+
+        for(map < string, PortDecl * >::iterator port = module->second->getIPorts().begin();port != module->second->getIPorts().end();port++){
+            ports.push_back(port->second);
+        }
+        std::pair<ModuleDecl*,vector<PortDecl*> > entry;
+        entry = std::pair<ModuleDecl*,vector<PortDecl*> >(module->second,ports);
+        modulePortMap.insert(entry);
+
+    }
+    return modulePortMap;
+
+};
 
 
 void Model::addModuleDecl(ModuleDecl * md)
@@ -205,3 +225,6 @@ FindNetlist::instancePortSignalMapType Model::getInstancePortSignalMapType() {
 FindNetlist::instanceListModuleMapType Model::getInstanceListModuleMap() {
     return this->_instanceListModuleMap;
 }
+
+
+void Model::addPorts(FindPorts::portType type) { this->_portTypes.push_back(type); }

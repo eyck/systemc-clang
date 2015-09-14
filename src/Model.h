@@ -43,6 +43,7 @@ namespace scpar {
     void addNetlist(FindNetlist &);
     void addSCMain(FunctionDecl*);
 	void addEntryFunctionGPUMacroMap(entryFunctionGPUMacroMapType);
+
     void updateModuleDecl();
 
     //GET
@@ -56,6 +57,11 @@ namespace scpar {
     vector<Transition*> getGSauto();
     void dump(raw_ostream &);
 
+
+    std::map<ModuleDecl*,vector<PortDecl*> > getModulePortMap();
+
+    std::vector<FindPorts::portType> _portTypes;
+    void addPorts(FindPorts::portType);
   private:
      Model(const Model &);
 
@@ -68,8 +74,11 @@ namespace scpar {
      FindNetlist::instanceModuleMapType _instanceModuleMap;
      FindNetlist::portSignalMapType _portSignalMap;
      FindNetlist::instancePortSignalMapType _instancePortSignalMap;
-     FindNetlist::instanceListModuleMapType _instanceListModuleMap; 
+     FindNetlist::instanceListModuleMapType _instanceListModuleMap;
+
+
 	 entryFunctionGPUMacroMapType _entryFunctionGPUMacroMap;
+
 	};
 }
 #endif

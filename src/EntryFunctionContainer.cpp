@@ -217,13 +217,18 @@ void EntryFunctionContainer::dump (raw_ostream & os, int tabn)
      it++ ) {
   (*it)->dump(os, newTabn);
  }
-  
+
+
+ // uncomment to reacitivate
  os <<"\n Suspension CFG";
  os <<"\n ###############";
- dumpSusCFG(os);
+ os <<"\n uncomment to reacitivate";
+ //dumpSusCFG(os);
  os <<"\n ###############";
  os <<"\n Suspension Automaton";
  os <<"\n @@@@@@@@@@@@@@@@";
- dumpSauto(os); 
+ os <<"\n uncomment to reacitivate";
+ //dumpSauto(os);
  os <<"\n @@@@@@@@@@@@@@@@";
+
 }

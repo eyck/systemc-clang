@@ -1,6 +1,8 @@
 #include <string>
 #include "ModuleDecl.h"
 
+#include <iostream>
+
 using namespace scpar;
 
 using std::string;
@@ -8,18 +10,18 @@ using std::string;
 ModuleDecl::ModuleDecl():
 _moduleName("NONE"), _classdecl(NULL)
 {
-
+    portDecl = new vector<PortDecl*>;
 }
 
 ModuleDecl::ModuleDecl(const string & name,
                        CXXRecordDecl * decl):_moduleName(name), _classdecl(decl)
 {
-
+    portDecl = new vector<PortDecl*>;
 }
 
 ModuleDecl::~ModuleDecl()
 {
-
+  /*
   // Delete all pointers in ports.
   for (ModuleDecl::portMapType::iterator mit = _iports.begin();
        mit != _iports.end(); mit++) {
@@ -41,7 +43,7 @@ ModuleDecl::~ModuleDecl()
     delete mit->second;
   }
   _ioports.clear();
-
+    */
 }
 
 void ModuleDecl::setModuleName(const string & name)
@@ -78,11 +80,13 @@ void ModuleDecl::addInputPorts(FindPorts::portType p)
 {
   for (FindPorts::portType::iterator mit = p.begin(), mite = p.end();
        mit != mite; mit++) {
-    string n = mit->first;
-    FindTemplateTypes *tt = new FindTemplateTypes(*mit->second);
-    PortDecl *pd = new PortDecl(n, tt);
 
-    _iports.insert(portPairType(mit->first, pd));
+        string n = mit->first;
+        FindTemplateTypes *tt = new FindTemplateTypes(*mit->second);
+        PortDecl *pd = new PortDecl(n, tt);
+
+        _iports.insert(portPairType(mit->first, pd));
+
   }
 }
 
@@ -90,11 +94,11 @@ void ModuleDecl::addOutputPorts(FindPorts::portType p)
 {
   for (FindPorts::portType::iterator mit = p.begin(), mite = p.end();
        mit != mite; mit++) {
-    string n = mit->first;
-    FindTemplateTypes *tt = new FindTemplateTypes(*mit->second);
-    PortDecl *pd = new PortDecl(n, tt);
+        string n = mit->first;
+        FindTemplateTypes *tt = new FindTemplateTypes(*mit->second);
+        PortDecl *pd = new PortDecl(n, tt);
 
-    _oports.insert(portPairType(n, pd));
+        _oports.insert(portPairType(n, pd));
   }
 }
 
@@ -102,8 +106,7 @@ void ModuleDecl::addInputOutputPorts(FindPorts::portType p)
 {
   for (FindPorts::portType::iterator mit = p.begin(), mite = p.end();
        mit != mite; mit++) {
-    _ioports.insert(portPairType
-                    (mit->first, new PortDecl(mit->first, mit->second)));
+            _ioports.insert(portPairType(mit->first, new PortDecl(mit->first, mit->second)));
   }
 }
 
@@ -338,14 +341,16 @@ void ModuleDecl::dumpPorts(raw_ostream & os, int tabn)
   for (int i = 0; i < tabn; i++) {
     os << " ";
   }
-  os << "Input ports:\n ";
+  os << " Input ports:\n ";
 
   if (_iports.size() == 0) {
     os << "   <<<NULL>>>\n";
   } else {
     for (ModuleDecl::portMapType::iterator mit = _iports.begin();
          mit != _iports.end(); mit++) {
-
+        os << "\n";
+        os << mit->second->getName();
+        os << "\n";
       mit->second->dump(os, tabn);
       os << "\n ";
     }
@@ -422,4 +427,5 @@ void ModuleDecl::dump(raw_ostream & os)
   os <<" Signal binding:>\n";
   dumpSignalBinding(os, 4);
   os << "\n=======================================================\n";
+
 }

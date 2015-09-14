@@ -41,9 +41,8 @@ namespace scpar {
     
     typedef pair<string, string> portSignalPairType;
     typedef map<string, string> portSignalMapType;
-    
-  public:
-    
+
+
     ModuleDecl();     
     ModuleDecl(const string &, CXXRecordDecl *);
 
@@ -78,6 +77,7 @@ namespace scpar {
     vector<EntryFunctionContainer*> getEntryFunctionContainer();
     int getNumInstances();
 
+
     void dumpPorts(raw_ostream &, int);
     void dumpInterfaces(raw_ostream &, int);
     void dumpProcesses(raw_ostream &, int);
@@ -86,6 +86,8 @@ namespace scpar {
     void dumpInstances(raw_ostream&, int);
     void dumpSignalBinding(raw_ostream&, int);
 
+    vector<PortDecl*> * portDecl;
+
   private:
     string _moduleName;
     CXXRecordDecl *_classdecl;
@@ -93,6 +95,9 @@ namespace scpar {
     portMapType _iports;
     portMapType _oports;
     portMapType _ioports;
+
+
+
     interfaceMapType _iinterfaces;
     interfaceMapType _ointerfaces;
     interfaceMapType _iointerfaces;
@@ -100,6 +105,7 @@ namespace scpar {
     Stmt *_constructorStmt;
     vector<string> _instanceList;
     portSignalMapType _portSignalMap;
+
     vector<EntryFunctionContainer*> _vef;
   };
 }

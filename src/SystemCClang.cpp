@@ -71,10 +71,13 @@ bool SystemCConsumer::fire()
 			ModuleDecl *md = new ModuleDecl();
 			vector < EntryFunctionContainer * >_entryFunctionContainerVector;
 			
-	  	FindConstructor constructor(mainmd->getModuleClassDecl(), _os);
+	  	    FindConstructor constructor(mainmd->getModuleClassDecl(), _os);
 			md->addConstructor(constructor.returnConstructorStmt());
 	
 			FindPorts ports(mainmd->getModuleClassDecl(), _os);
+            //EDITED BY TOBIAS
+            this->_systemcModel->addPorts(ports.getInputPorts());
+            this->_systemcModel->addPorts(ports.getOutputPorts());
 			md->addInputPorts(ports.getInputPorts());
 			md->addOutputPorts(ports.getOutputPorts());
 			md->addInputOutputPorts(ports.getInputOutputPorts());

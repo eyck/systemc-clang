@@ -64,14 +64,14 @@ namespace scpar {
 		// Add waits.
 		void addSensitivityInfo(FindSensitivity &);
   	void addWaits (FindWait &);
-		void addNotifys(FindNotify &);   
-		void addSusCFGAuto(SuspensionAutomata &);
+		void addNotifys(FindNotify &);
+    void addSusCFGAuto(SuspensionAutomata &);
   
   //void setConstructorStmt (Stmt *);
-		void setName (string);
-		void setProcessType (PROCESS_TYPE);
-		void setEntryMethod (CXXMethodDecl *);
-		void dumpSusCFG(raw_ostream &);
+    void setName (string);
+    void setProcessType (PROCESS_TYPE);
+    void setEntryMethod (CXXMethodDecl *);
+	void dumpSusCFG(raw_ostream &);
   	void dumpSauto(raw_ostream &);
   	void dump (raw_ostream &, int);
 
