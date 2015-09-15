@@ -1,4 +1,5 @@
 #include "FindNetlist.h"
+#include <iostream>
 using namespace scpar;
 
 FindNetlist::FindNetlist(FunctionDecl * fnDecl):
@@ -57,22 +58,19 @@ bool FindNetlist::VisitCXXOperatorCallExpr(CXXOperatorCallExpr * ce)
 	{
 		if (Expr * e = dyn_cast < Expr > (*it))
 		{
-			if (MemberExpr * me =
-				dyn_cast < MemberExpr > (e->IgnoreImpCasts()))
+			if (MemberExpr * me = dyn_cast < MemberExpr > (e->IgnoreImpCasts()))
 			{
 				if (DeclRefExpr * de =
 					dyn_cast < DeclRefExpr > (me->getBase()->IgnoreImpCasts()))
 				{
-					moduleName =
-						de->getDecl()->getType().getBaseTypeIdentifier()->
-						getName();
+					moduleName = de->getDecl()->getType().getBaseTypeIdentifier()->getName();
 					instanceName = de->getFoundDecl()->getNameAsString();
 				}
 				portName = me->getMemberDecl()->getNameAsString();
+                std:cout << "HACKING: "  << portName << std::endl;
 				foundME = true;
 			}
-			if (DeclRefExpr * de =
-				dyn_cast < DeclRefExpr > (e->IgnoreImpCasts()))
+			if (DeclRefExpr * de = dyn_cast < DeclRefExpr > (e->IgnoreImpCasts()))
 			{
 				if (foundME)
 				{
@@ -85,26 +83,22 @@ bool FindNetlist::VisitCXXOperatorCallExpr(CXXOperatorCallExpr * ce)
 
 	if (_instanceModuleMap.find(instanceName) == _instanceModuleMap.end())
 	{
-		_instanceModuleMap.
-			insert(instanceModulePairType(instanceName, moduleName));
+		_instanceModuleMap.insert(instanceModulePairType(instanceName, moduleName));
 		_portSignalMap.clear();
-	 updateInstanceListModuleMap(instanceName, moduleName);
- }
+	    updateInstanceListModuleMap(instanceName, moduleName);
+    }
 
 	_portSignalMap.insert(portSignalPairType(portName, signalName));
 
 
-	if (_instancePortSignalMap.find(instanceName) ==
-		_instancePortSignalMap.end())
+	if (_instancePortSignalMap.find(instanceName) == _instancePortSignalMap.end())
 	{
-		_instancePortSignalMap.
-			insert(instancePortSignalPairType(instanceName, _portSignalMap));
+		_instancePortSignalMap.insert(instancePortSignalPairType(instanceName, _portSignalMap));
 	}
 	else
 	{
 		_instancePortSignalMap.erase(instanceName);
-		_instancePortSignalMap.
-			insert(instancePortSignalPairType(instanceName, _portSignalMap));
+        _instancePortSignalMap.insert(instancePortSignalPairType(instanceName, _portSignalMap));
 	}
 
 	return true;

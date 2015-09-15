@@ -44,14 +44,14 @@ bool FindTLMInterfaces::VisitFieldDecl (FieldDecl * fd)
 			return true;
 	}
 
-    std::cout << "AIT: " << ait->first << std::endl;
+
  if (ait->first == "sc_fifo_in") {
 
-			_inInterfaces.insert (kvType (fname, te));	     
+	_inInterfaces.insert (kvType (fname, te));
  }
 	
  else if (ait->first == "sc_fifo_out") {
-	 _outInterfaces.insert (kvType (fname, te));
+     _outInterfaces.insert (kvType (fname, te));
 	}
 
 	else if (ait->first == "sc_fifo_inout") {
