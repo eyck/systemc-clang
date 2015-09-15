@@ -10,13 +10,11 @@ using std::string;
 ModuleDecl::ModuleDecl():
 _moduleName("NONE"), _classdecl(NULL)
 {
-    portDecl = new vector<PortDecl*>;
 }
 
 ModuleDecl::ModuleDecl(const string & name,
                        CXXRecordDecl * decl):_moduleName(name), _classdecl(decl)
 {
-    portDecl = new vector<PortDecl*>;
 }
 
 ModuleDecl::~ModuleDecl()

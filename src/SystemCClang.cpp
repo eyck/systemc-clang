@@ -29,15 +29,17 @@ bool SystemCConsumer::fire()
 	FindGlobalEvents::globalEventMapType eventMap = fglobals.getEventMap();
 	_systemcModel->addGlobalEvents(eventMap);
 
+    // Modules
 	SCModules::moduleMapType scmodules = scmod.getSystemCModulesMap();
 		
-		for (SCModules::moduleMapType::iterator mit = scmodules.begin(),
+	for (SCModules::moduleMapType::iterator mit = scmodules.begin(),
 		 mitend = scmodules.end(); mit != mitend; mit++)
 	{
 		ModuleDecl *md = new ModuleDecl(mit->first, mit->second);		
 		_systemcModel->addModuleDecl(md);		
 	}
-	////////////////////////////////////////////////////////////////
+
+	// SC_MAIN
 	FindSCMain scmain(tu, _os);
 
 	if (scmain.isSCMainFound())
@@ -54,11 +56,12 @@ bool SystemCConsumer::fire()
 	FindNetlist findNetlist(scmain.getSCMainFunctionDecl());
  	findNetlist.dump();
 	_systemcModel->addNetlist(findNetlist); 
-	////////////////////////////////////////////////////////////////
-	
+
+    // PORTS
+
 	Model::moduleMapType moduleMap = _systemcModel->getModuleDecl();
 	
-	for (Model::moduleMapType::iterator mit = moduleMap.begin(), mitend = moduleMap.end(); 
+	for (Model::moduleMapType::iterator mit = moduleMap.begin(), mitend = moduleMap.end();
 			mit != mitend;
 			mit++) {
 			
@@ -82,19 +85,18 @@ bool SystemCConsumer::fire()
 			md->addOutputPorts(ports.getOutputPorts());
 			md->addInputOutputPorts(ports.getInputOutputPorts());
 	  
-	  	FindTLMInterfaces findTLMInterfaces(mainmd->getModuleClassDecl(), _os);
-	  	md->addInputInterfaces(findTLMInterfaces.getInputInterfaces());
-	  	md->addOutputInterfaces(findTLMInterfaces.getOutputInterfaces());
-	  	md->addInputOutputInterfaces(findTLMInterfaces.getInputOutputInterfaces());
+            FindTLMInterfaces findTLMInterfaces(mainmd->getModuleClassDecl(), _os);
+            md->addInputInterfaces(findTLMInterfaces.getInputInterfaces());
+            md->addOutputInterfaces(findTLMInterfaces.getOutputInterfaces());
+            md->addInputOutputInterfaces(findTLMInterfaces.getInputOutputInterfaces());
 	
 			FindSignals signals(mainmd->getModuleClassDecl(), _os);
 			md->addSignals(signals.getSignals());
 	
 			FindEntryFunctions findEntries(mainmd->getModuleClassDecl(), _os);
-			FindEntryFunctions::entryFunctionVectorType * entryFunctions =
-				findEntries.getEntryFunctions();
+			FindEntryFunctions::entryFunctionVectorType * entryFunctions = findEntries.getEntryFunctions();
 	  
-	  	md->addProcess(entryFunctions);
+	  	    md->addProcess(entryFunctions);
 	
 			for (unsigned int i = 0; i < entryFunctions->size(); i++)
 			{
@@ -116,47 +118,47 @@ bool SystemCConsumer::fire()
 				FindNotify findNotify(ef->_entryMethodDecl, _os);
 				ef->addNotifys(findNotify);
     
-   /*
-   SuspensionAutomata suspensionAutomata(findWaits.getWaitCalls(), ef->getEntryMethod(), &_context, llvm::errs());
-   if (suspensionAutomata.initialize()) {
-    suspensionAutomata.genSusCFG();
-    //suspensionAutomata.dumpSusCFG();
-    suspensionAutomata.genSauto();    
-    //suspensionAutomata.dumpSauto();
-    ef->addSusCFGAuto(suspensionAutomata); 
-   }
-  	*/ 
+               /*
+               SuspensionAutomata suspensionAutomata(findWaits.getWaitCalls(), ef->getEntryMethod(), &_context, llvm::errs());
+               if (suspensionAutomata.initialize()) {
+                suspensionAutomata.genSusCFG();
+                //suspensionAutomata.dumpSusCFG();
+                suspensionAutomata.genSauto();
+                //suspensionAutomata.dumpSauto();
+                ef->addSusCFGAuto(suspensionAutomata);
+               }
+                */
 				_entryFunctionContainerVector.push_back(ef);
 			
-  		}
+  		    }
 			moduleDeclVec.push_back(md);
 		}
 			_systemcModel->addModuleDeclInstances(mainmd, moduleDeclVec);
 	}
 	
-	/*
-	FindSCMain scmain(tu, _os);
+    /*
+    FindSCMain scmain(tu, _os);
 
-	if (scmain.isSCMainFound())
-	{
-		FunctionDecl *fnDecl = scmain.getSCMainFunctionDecl();
+    if (scmain.isSCMainFound())
+    {
+        FunctionDecl *fnDecl = scmain.getSCMainFunctionDecl();
 
-		FindSimTime scstart(fnDecl, _os);
-		_systemcModel->addSimulationTime(scstart.returnSimTime());
+        FindSimTime scstart(fnDecl, _os);
+        _systemcModel->addSimulationTime(scstart.returnSimTime());
 
-	}
-	else {
-		_os <<"\n Could not find SCMain";
-	}
-	FindNetlist findNetlist(scmain.getSCMainFunctionDecl());
- 	findNetlist.dump();
-	_systemcModel->addNetlist(findNetlist); 
-	*/
-	
-	
-	// Generate SAUTO
-	// Placing it here so that unique SAUTO for each instance
-	//Model::moduleMapType moduleMap = _systemcModel->getModuleDecl();
+    }
+    else {
+        _os <<"\n Could not find SCMain";
+    }
+    FindNetlist findNetlist(scmain.getSCMainFunctionDecl());
+    findNetlist.dump();
+    _systemcModel->addNetlist(findNetlist);
+    */
+
+
+    // Generate SAUTO
+    // Placing it here so that unique SAUTO for each instance
+    //Model::moduleMapType moduleMap = _systemcModel->getModuleDecl();
 	Model::moduleInstanceMapType moduleInstanceMap = _systemcModel->getModuleInstanceMap();
 	
 	for (Model::moduleInstanceMapType::iterator it = moduleInstanceMap.begin(), eit = moduleInstanceMap.end();

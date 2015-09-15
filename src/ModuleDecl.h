@@ -86,8 +86,6 @@ namespace scpar {
     void dumpInstances(raw_ostream&, int);
     void dumpSignalBinding(raw_ostream&, int);
 
-    vector<PortDecl*> * portDecl;
-
   private:
     string _moduleName;
     CXXRecordDecl *_classdecl;
