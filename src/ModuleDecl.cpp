@@ -19,7 +19,7 @@ ModuleDecl::ModuleDecl(const string & name,
 
 ModuleDecl::~ModuleDecl()
 {
-  /*
+
   // Delete all pointers in ports.
   for (ModuleDecl::portMapType::iterator mit = _iports.begin();
        mit != _iports.end(); mit++) {
@@ -41,7 +41,6 @@ ModuleDecl::~ModuleDecl()
     delete mit->second;
   }
   _ioports.clear();
-    */
 }
 
 void ModuleDecl::setModuleName(const string & name)

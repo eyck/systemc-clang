@@ -17,7 +17,7 @@ namespace scpar {
    // netlist from module constructors. Right now I am not 
    // doing it.	
    FindNetlist (FunctionDecl *);
-		 FindNetlist (const FindNetlist &);
+   FindNetlist (const FindNetlist &);
    ~FindNetlist ();
 
   typedef pair <string, string> instanceModulePairType;

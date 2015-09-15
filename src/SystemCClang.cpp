@@ -78,9 +78,6 @@ bool SystemCConsumer::fire()
 			md->addConstructor(constructor.returnConstructorStmt());
 	
 			FindPorts ports(mainmd->getModuleClassDecl(), _os);
-            //EDITED BY TOBIAS
-            this->_systemcModel->addPorts(ports.getInputPorts());
-            this->_systemcModel->addPorts(ports.getOutputPorts());
 			md->addInputPorts(ports.getInputPorts());
 			md->addOutputPorts(ports.getOutputPorts());
 			md->addInputOutputPorts(ports.getInputOutputPorts());
