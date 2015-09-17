@@ -1,6 +1,8 @@
-#include <string>
+
 #include "ModuleDecl.h"
 
+
+#include <string>
 #include <iostream>
 
 using namespace scpar;

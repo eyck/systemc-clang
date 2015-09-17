@@ -67,7 +67,8 @@ bool FindNetlist::VisitCXXOperatorCallExpr(CXXOperatorCallExpr * ce)
 					instanceName = de->getFoundDecl()->getNameAsString();
 				}
 				portName = me->getMemberDecl()->getNameAsString();
-                std:cout << "HACKING: "  << portName << std::endl;
+
+
 				foundME = true;
 			}
 			if (DeclRefExpr * de = dyn_cast < DeclRefExpr > (e->IgnoreImpCasts()))
@@ -75,6 +76,7 @@ bool FindNetlist::VisitCXXOperatorCallExpr(CXXOperatorCallExpr * ce)
 				if (foundME)
 				{
 					signalName = de->getNameInfo().getAsString();
+					std:cout << "module: " << moduleName << " instance " << instanceName << " port: "  << portName << " bound to:" << signalName << std::endl;
 					foundME = false;
 				}
 			}

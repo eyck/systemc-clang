@@ -75,6 +75,7 @@ bool SystemCConsumer::fire()
 			vector < EntryFunctionContainer * >_entryFunctionContainerVector;
 			
 	  	    FindConstructor constructor(mainmd->getModuleClassDecl(), _os);
+
 			md->addConstructor(constructor.returnConstructorStmt());
 	
 			FindPorts ports(mainmd->getModuleClassDecl(), _os);
